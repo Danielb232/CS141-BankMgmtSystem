@@ -14,7 +14,7 @@ public class Customer {
    
     
     
-    public Customer(String newUser, String newPassword, String newName, int newBalance, int transferID){
+    public Customer(String newUser, String newPassword, String newName, double newBalance, int age){
         this.name = newName;
         this.password = newPassword;
         this.UserName = newUser;

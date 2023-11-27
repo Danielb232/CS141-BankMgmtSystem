@@ -9,7 +9,7 @@ public class BankManager {
     private static Scanner scnr = new Scanner(System.in);
     static Random rand = new Random();
 
-    
+    // int indexPosition;
     public static void loginToAcc(ArrayList<BankManager> accounts, Scanner scnr) {
         System.out.println("Please enter your username: ");
         String userName = scnr.nextLine();
@@ -25,6 +25,8 @@ public class BankManager {
             else if ((i.getUserName().equals(userName)) && (i.getPassword().equals(passWord))) {
                 System.out.println("\nLogin Successful!");
                 System.out.println("Hello, " + i.getName());
+                //  indexPosition = i;
+                //
 
                 System.out.println("\nMenu: ");
                 System.out.println("#1 - Deposit.");
@@ -70,7 +72,7 @@ public class BankManager {
             System.out.println("Please enter your age");
             int newAge = scnr.nextInt();
             System.out.println("Please enter your initial deposit");
-            int newBalance = scnr.nextInt();
+            double newBalance = scnr.nextInt();
             
             Customer newCustomer = new Customer(newUser, newPassword, newName, newBalance, newAge);
             System.out.println("\nYour transfer ID is " + newCustomer.getTransferID() + ".");
@@ -80,9 +82,24 @@ public class BankManager {
 
         public static void deposit(ArrayList<Customer> accounts, Scanner scnr) {
             System.out.println("How much money would you like to deposit into your account?");
+            double amount = scnr.nextDouble();        
+            
+            if (amount < 1.00) {
+                System.out.println("You must deposit at least $1.00");
+            }
+            else {
+                
+        }
+
+        public static void withdraw(ArrayList<Customer> accounts, Scanner scnr){
+            System.out.println("How much money would you like to withdraw from your account?");
             double amount = scnr.nextDouble();
-            
-            
-            
+            if (amount > ) {
+                System.out.println("Insufficient Funds");
+            }
+
+            if (amount < 1.00) {
+                System.out.println("You must withdraw at least $1.00");
+            }  
         }
     }
