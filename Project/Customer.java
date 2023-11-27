@@ -23,7 +23,29 @@ public class Customer {
     }
     
     
-    
+    public static Random getRand() {
+        return rand;
+    }
+
+    public static void setRand(Random rand) {
+        Customer.rand = rand;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getTransferID() {
+        return transferID;
+    }
+
+    public void setTransferID(int transferID) {
+        this.transferID = transferID;
+    }
     
     public String getName() {
         return name;

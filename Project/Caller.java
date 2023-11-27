@@ -35,16 +35,17 @@ public class Caller {
                 System.out.println("\nBye!");
                 break;
             }
-            
-            switch (choice) {
-                case 1:
-                BankManager.loginToAcc(accounts, scnr);
-                break;
-                case 2:
-                BankManager.addAccount(accounts, scnr);
-                break;
+            boolean t;
+			while(t = true){
+                switch (choice) {
+                    case 1:
+                        BankManager.loginToAcc(accounts, scnr);
+                        break;
+                    case 2:
+                        BankManager.addAccount(accounts, scnr);
+                        break;
             }
-            
+            }
         }
     }
     

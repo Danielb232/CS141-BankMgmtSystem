@@ -29,14 +29,14 @@ public class BankManager {
                 System.out.println("\nMenu: ");
                 System.out.println("#1 - Deposit.");
                 System.out.println("#2 - Withdraw.");
-                System.out.println("#3 - View Balance & Interest.");
+                System.out.println("#3 - View Balance & account info");
                 System.out.println("#4 - Transfer Money to another account.");
                 System.out.println("#5 - Print Transaction History.");
                 System.out.println("#6 - Log out and go back to main menu.\n");
                 
                 System.out.println("\nEnter your choice (1-6): ");
                 
-                int choice;
+                int choice1;
                 
                 do {
                     
@@ -45,12 +45,12 @@ public class BankManager {
                         scnr.next();
                     }
                     
-                    choice = scnr.nextInt();
+                    choice1 = scnr.nextInt();
                     scnr.nextLine();
                     
-                } while (choice < 1 || choice > 6);
+                } while (choice1 < 1 || choice1 > 6);
                 
-                if (choice == 6) {
+                if (choice1 == 6) {
                     System.out.println("\nBye!");
                     break;
                 }
@@ -58,27 +58,31 @@ public class BankManager {
             
         }
         
-        public static addAccount(ArrayList<BankManager> accounts, Scanner scnr) {
+        public static void addAccount(ArrayList<BankManager> accounts, Scanner scnr) {
+            
             System.out.println("Please enter new username");
-            String userName = scnr.nextLine();
+            String newUser = scnr.nextLine();
             System.out.println("Please enter new password");
-            String password = scnr.nextLine();
+            String newPassword = scnr.nextLine();
             System.out.println("Please enter your name");
-            String name = scnr.nextLine();
+            String newName = scnr.nextLine();
             scnr.nextLine();
             System.out.println("Please enter your age");
-            int age = scnr.nextInt();
+            int newAge = scnr.nextInt();
             System.out.println("Please enter your initial deposit");
-            int balance = scnr.nextInt();
+            int newBalance = scnr.nextInt();
             
-            
+            Customer newCustomer = new Customer(newUser, newPassword, newName, newBalance, newAge);
+            System.out.println("\nYour transfer ID is " + newCustomer.getTransferID() + ".");
+
         }
 
 
-        public static void deposit(ArrayList<EmployeeInfo> employees, Scanner scnr) {
+        public static void deposit(ArrayList<Customer> accounts, Scanner scnr) {
             System.out.println("How much money would you like to deposit into your account?");
             double amount = scnr.nextDouble();
-
+            
+            
             
         }
     }
