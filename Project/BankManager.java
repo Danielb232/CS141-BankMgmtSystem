@@ -9,7 +9,7 @@ public class BankManager {
     private static Scanner scnr = new Scanner(System.in);
     static Random rand = new Random();
 
-    // int indexPosition;
+    // int indexPosition; (
     public static void loginToAcc(ArrayList<BankManager> accounts, Scanner scnr) {
         System.out.println("Please enter your username: ");
         String userName = scnr.nextLine();
@@ -56,6 +56,32 @@ public class BankManager {
                     System.out.println("\nBye!");
                     break;
                 }
+
+                switch(choice1) {
+                    case 1 {
+                        i.deposit();
+                        break;
+                    }
+                    case 2 {
+                        i.withdraw();
+                        break;
+                    }
+                    case 3 {
+                        i.viewBalance();
+                        break;
+                    }
+                    case 4 {
+                        i.transfer();
+                        break
+                    }
+                    case 5 {
+                        i.printTransactions();
+                    }
+                    case 6 {
+                        i.logOut();
+                    }
+
+                }
             }
             
         }
@@ -88,18 +114,49 @@ public class BankManager {
                 System.out.println("You must deposit at least $1.00");
             }
             else {
-                
+                customer.balance += amount;
+                // FIX THIS
+            }
+
         }
 
         public static void withdraw(ArrayList<Customer> accounts, Scanner scnr){
             System.out.println("How much money would you like to withdraw from your account?");
             double amount = scnr.nextDouble();
-            if (amount > ) {
+            if (amount > customer.balance) {
                 System.out.println("Insufficient Funds");
             }
 
             if (amount < 1.00) {
                 System.out.println("You must withdraw at least $1.00");
+            }
+            else {
+                customer.balance -= amount;
+                // FIX THIS
             }  
+        }
+
+        publc static void viewBalance(ArrayList<Customer> accounts) {
+            System.out.println("Transfer ID:" + customer.transferID);
+            System.out.println("Balance:" + customer.balance);
+        }
+
+        public static void transfer(ArrayList<Customer> accounts, Scanner scnr) {
+            System.out.println("Enter transfer ID of user to transfer to: ");
+            double transferAmount = scnr.nextDouble();
+
+            // If the transfer ID does not exist, say it doesnt
+            // if it does, say "are you sure?", then if they say "yes",
+            // Add the amount to the account that is connected to that transfer ID
+        
+        }
+
+        public static void printTransactions () {
+            // We need an array list that stores all the transaction messages from deposit & withdraw.
+            // We would print that array list here
+        }
+
+        public static void logOut() {
+            // Just logout
         }
     }
