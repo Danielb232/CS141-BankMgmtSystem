@@ -18,11 +18,8 @@ public class BankManager {
         String passWord = scnr.nextLine();
         
         for(Customer i : accounts) {
-            if(!(i.getUserName().equals(userName)) || (!(i.getPassword().equals(passWord)))) {
-                System.out.print("Usernamereererer/Password doesn't exist, try again");
-                return;
-            }
-            else if ((i.getUserName().equals(userName)) && (i.getPassword().equals(passWord))) {
+
+            if ((i.getUserName().equals(userName)) && (i.getPassword().equals(passWord))) {
                 System.out.println("\nLogin Successful!");
                 System.out.println("Hello, " + i.getName());
                 //  indexPosition = i;
@@ -58,16 +55,16 @@ public class BankManager {
                 }
 
                 switch(choice1) {
-                    case 1 {
-                        i.deposit();
+                    case 1: {
+                        deposit(i, scnr);
                         break;
                     }
-                    case 2 {
-                        i.withdraw();
+                    case 2: {
+                        withdraw(i, scnr);
                         break;
                     }
                     case 3 {
-                        i.viewBalance();
+                        viewBalance(i, scnr);
                         break;
                     }
                     case 4 {
@@ -100,30 +97,33 @@ public class BankManager {
             System.out.println("Please enter your initial deposit");
             double newBalance = scnr.nextInt();
             
-            Customer newCustomer = new Customer(newUser, newPassword, newName, newBalance, newAge);
+            Customer newCustomer = new Customer(newUser, newPassword, newName, newBalance, newAge, _________ );
+            accounts.add(newCustomer);
+
             System.out.println("\nYour transfer ID is " + newCustomer.getTransferID() + ".");
 
         }
 
 
-        public static void deposit(ArrayList<Customer> accounts, Scanner scnr) {
+        public static void deposit(Customer c, Scanner scnr) {
             System.out.println("How much money would you like to deposit into your account?");
             double amount = scnr.nextDouble();        
             
+
             if (amount < 1.00) {
                 System.out.println("You must deposit at least $1.00");
             }
             else {
-                customer.balance += amount;
+                c.deposit(amount);
                 // FIX THIS
             }
 
         }
 
-        public static void withdraw(ArrayList<Customer> accounts, Scanner scnr){
+        public static void withdraw(Customer c, Scanner scnr){
             System.out.println("How much money would you like to withdraw from your account?");
             double amount = scnr.nextDouble();
-            if (amount > customer.balance) {
+            if (amount > c.balance) {
                 System.out.println("Insufficient Funds");
             }
 
@@ -131,12 +131,12 @@ public class BankManager {
                 System.out.println("You must withdraw at least $1.00");
             }
             else {
-                customer.balance -= amount;
+                c.withdraw(amount);
                 // FIX THIS
             }  
         }
 
-        public static void viewBalance(ArrayList<Customer> accounts) {
+        public static void viewBalance(Customer c) {
             System.out.println("Transfer ID:" + customer.transferID);
             System.out.println("Balance:" + customer.balance);
         }
@@ -154,6 +154,8 @@ public class BankManager {
         public static void printTransactions () {
             // We need an array list that stores all the transaction messages from deposit & withdraw.
             // We would print that array list here
+            //
+            // Add an array list to the customer
         }
 
         public static void logOut() {

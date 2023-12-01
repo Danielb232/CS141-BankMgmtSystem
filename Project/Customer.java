@@ -11,18 +11,41 @@ public class Customer {
     private String UserName;
     private double balance;
     private int transferID;
+    private String[] transactionLog;
    
     
     
-    public Customer(String newUser, String newPassword, String newName, double newBalance, int age){
+    
+
+    public Customer(String newUser, String newPassword, String newName, double newBalance, int age, String[] transactionLog){
         this.name = newName;
         this.password = newPassword;
         this.UserName = newUser;
         this.balance = newBalance;
         this.transferID = rand.nextInt(999999);
+        this.transactionLog = transactionLog;
     }
     
-    
+    public void deposit(double amount) {
+        balance += amount;
+        return;
+    }
+
+    public void withdraw(double amount) {
+        balance -= amount;
+        return;
+    }
+
+    //  Every method needs one of those ^
+
+    public String[] getTransactionLog() {
+        return transactionLog;
+    }
+
+    public void setTransactionLog(String[] transactionLog) {
+        this.transactionLog = transactionLog;
+    }
+
     public static Random getRand() {
         return rand;
     }
