@@ -136,7 +136,7 @@ public class BankManager {
             }  
         }
 
-        publc static void viewBalance(ArrayList<Customer> accounts) {
+        public static void viewBalance(ArrayList<Customer> accounts) {
             System.out.println("Transfer ID:" + customer.transferID);
             System.out.println("Balance:" + customer.balance);
         }
