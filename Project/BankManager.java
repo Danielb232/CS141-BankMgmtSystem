@@ -19,7 +19,7 @@ public class BankManager {
         
         for(Customer i : accounts) {
             if(!(i.getUserName().equals(userName)) || (!(i.getPassword().equals(passWord)))) {
-                System.out.print("Username/Password doesn't exist, try again");
+                System.out.print("Usernamereererer/Password doesn't exist, try again");
                 return;
             }
             else if ((i.getUserName().equals(userName)) && (i.getPassword().equals(passWord))) {
