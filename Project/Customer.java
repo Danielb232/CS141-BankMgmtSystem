@@ -36,6 +36,22 @@ public class Customer {
         return;
     }
 
+    public void viewBalance() {
+        return;
+    }
+
+    public void transfer(double amount) {
+        return;
+    }
+
+    public void printTransactions() {
+        return;
+    }
+
+    public void logOut() {
+        return;
+    }
+
     //  Every method needs one of those ^
 
     public String[] getTransactionLog() {
@@ -94,6 +110,7 @@ public class Customer {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
    
     
     

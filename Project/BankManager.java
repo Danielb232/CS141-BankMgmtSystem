@@ -63,23 +63,26 @@ public class BankManager {
                         withdraw(i, scnr);
                         break;
                     }
-                    case 3 {
-                        viewBalance(i, scnr);
+                    case 3: {
+                        viewBalance(i);
                         break;
                     }
-                    case 4 {
-                        i.transfer();
-                        break
+                    case 4: {
+                        transfer();
+                        break;
                     }
-                    case 5 {
+                    case 5: {
                         i.printTransactions();
+                        break;
                     }
-                    case 6 {
+                    case 6: {
                         i.logOut();
+                        break;
                     }
 
                 }
             }
+        }
             
         }
         
@@ -123,7 +126,7 @@ public class BankManager {
         public static void withdraw(Customer c, Scanner scnr){
             System.out.println("How much money would you like to withdraw from your account?");
             double amount = scnr.nextDouble();
-            if (amount > c.balance) {
+            if (amount > c.getBalance()) {
                 System.out.println("Insufficient Funds");
             }
 
@@ -137,8 +140,8 @@ public class BankManager {
         }
 
         public static void viewBalance(Customer c) {
-            System.out.println("Transfer ID:" + customer.transferID);
-            System.out.println("Balance:" + customer.balance);
+            System.out.println("Transfer ID:" + c.getTransferID());
+            System.out.println("Balance:" + c.getBalance());
         }
 
         public static void transfer(ArrayList<Customer> accounts, Scanner scnr) {
