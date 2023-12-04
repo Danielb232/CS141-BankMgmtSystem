@@ -13,9 +13,6 @@ public class Customer {
     private int transferID;
     private String[] transactionLog;
    
-    
-    
-    
 
     public Customer(String newUser, String newPassword, String newName, double newBalance, int age, String[] transactionLog){
         this.name = newName;
@@ -26,6 +23,9 @@ public class Customer {
         this.transactionLog = transactionLog;
     }
     
+
+    // Getters and Setters for methods start \/
+
     public void deposit(double amount) {
         balance += amount;
         return;
@@ -52,7 +52,7 @@ public class Customer {
         return;
     }
 
-    //  Every method needs one of those ^
+    //  Getters and Setters for methods ends ^
 
     public String[] getTransactionLog() {
         return transactionLog;

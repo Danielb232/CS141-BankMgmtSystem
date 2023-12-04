@@ -68,7 +68,7 @@ public class BankManager {
                         break;
                     }
                     case 4: {
-                        transfer();
+                        //transfer();
                         break;
                     }
                     case 5: {
