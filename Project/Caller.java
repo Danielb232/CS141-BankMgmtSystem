@@ -36,15 +36,15 @@ public class Caller {
                 break;
             }
             boolean t;
-			while(t = true){
+            while(t = true){
                 switch (choice) {
                     case 1:
-                        BankManager.loginToAcc(accounts, scnr);
-                        break;
+                    BankManager.loginToAcc(accounts, scnr);
+                    break;
                     case 2:
-                        BankManager.addAccount(accounts, scnr);
-                        break;
-            }
+                    BankManager.addAccount(accounts, scnr);
+                    break;
+                }
             }
         }
     }
