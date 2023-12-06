@@ -49,9 +49,7 @@
             return;
         }
         
-        public void logOut() {
-            return;
-        }
+        
         
         
         public void addToLog (String transactionMessage) {
@@ -59,7 +57,9 @@
         }
         
         public void printLog() {
-            for(transactionLog )
+            for(int i = 0; i < transactionLog.size(); i++) {
+                System.out.println(transactionLog.get(i));
+            }
         }
         
         //  Getters and Setters for methods ends ^

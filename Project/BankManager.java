@@ -9,8 +9,9 @@ public class BankManager {
     private static Scanner scnr = new Scanner(System.in);
     static Random rand = new Random();
     
-    // int indexPosition; (
+    
     public static void loginToAcc(ArrayList<Customer> accounts, Scanner scnr) {
+        
         System.out.println("Please enter your username: ");
         String userName = scnr.nextLine();
         
@@ -22,64 +23,66 @@ public class BankManager {
             if ((i.getUserName().equals(userName)) && (i.getPassword().equals(passWord))) {
                 System.out.println("\nLogin Successful!");
                 System.out.println("\nHello, " + i.getName());
-                //  indexPosition = i;
-                //
                 
-                System.out.println("\nMenu: ");
-                System.out.println("#1 - Deposit.");
-                System.out.println("#2 - Withdraw.");
-                System.out.println("#3 - View Balance & account info");
-                System.out.println("#4 - Transfer Money to another account.");
-                System.out.println("#5 - Print Transaction History.");
-                System.out.println("#6 - Log out and go back to main menu.\n");
-                
-                System.out.println("\nEnter your choice (1-6): ");
-                
-                int choice1;
-                
-                do {
+                boolean loggedIn = true;
+                while (loggedIn) {
+                    System.out.println("\nMenu: ");
+                    System.out.println("#1 - Deposit.");
+                    System.out.println("#2 - Withdraw.");
+                    System.out.println("#3 - View Balance & account info");
+                    System.out.println("#4 - Transfer Money to another account.");
+                    System.out.println("#5 - Print Transaction History.");
+                    System.out.println("#6 - Log out and go back to main menu.\n");
                     
-                    while (!scnr.hasNextInt()) {
-                        System.out.println("Invalid input. Please enter a number between 1 and 6.");
-                        scnr.next();
-                    }
+                    System.out.println("\nEnter your choice (1-6): ");
                     
-                    choice1 = scnr.nextInt();
-                    scnr.nextLine();
+                    int choice1;
                     
-                } while (choice1 < 1 || choice1 > 6);
-                
-                if (choice1 == 6) {
-                    System.out.println("\nBye!");
-                    break;
-                }
-                
-                switch(choice1) {
-                    case 1: {
-                        deposit(i, scnr);
-                        break;
-                    }
-                    case 2: {
-                        withdraw(i, scnr);
-                        break;
-                    }
-                    case 3: {
-                        viewBalance(i);
-                        break;
-                    }
-                    case 4: {
-                        transfer(i, accounts, scnr);
-                        break;
-                    }
-                    case 5: {
-                        i.printTransactions();
-                        break;
-                    }
-                    case 6: {
-                        i.logOut();
+                    
+                    do {
+                        
+                        while (!scnr.hasNextInt()) {
+                            System.out.println("Invalid input. Please enter a number between 1 and 6.");
+                            scnr.next();
+                        }
+                        
+                        choice1 = scnr.nextInt();
+                        scnr.nextLine();
+                        
+                    } while (choice1 < 1 || choice1 > 6);
+                    
+                    if (choice1 == 6) {
+                        System.out.println("\nBye!");
                         break;
                     }
                     
+                    switch(choice1) {
+                        case 1: {
+                            deposit(i, scnr);
+                            break;
+                        }
+                        case 2: {
+                            withdraw(i, scnr);
+                            break;
+                        }
+                        case 3: {
+                            viewBalance(i);
+                            break;
+                        }
+                        case 4: {
+                            transfer(i, accounts, scnr);
+                            break;
+                        }
+                        case 5: {
+                            i.printTransactions();
+                            break;
+                        }
+                        case 6: {
+                            loggedIn = false;
+                            break;
+                        }
+                        
+                    }
                 }
             }
             else {
@@ -97,17 +100,15 @@ public class BankManager {
         String newPassword = scnr.nextLine();
         System.out.println("Please enter your name");
         String newName = scnr.nextLine();
-        scnr.nextLine();
         System.out.println("Please enter your age");
         int newAge = scnr.nextInt();
         System.out.println("Please enter your initial deposit");
-        double newBalance = scnr.nextInt();
+        double newBalance = scnr.nextDouble();
         
-        // FIX THIS!!! WE NEED TO ADD THE TRANSACTION LOG STRING ARRAY
         Customer newCustomer = new Customer(newUser, newPassword, newName, newBalance, newAge);
         accounts.add(newCustomer);
         
-        System.out.println("\nYour transfer ID is " + newCustomer.getTransferID() + ".");
+        System.out.println("\nYour transfer ID is " + newCustomer.getTransferID() + ". Save this!");
         
     }
     
@@ -150,6 +151,7 @@ public class BankManager {
     public static void viewBalance(Customer c) {
         System.out.println("Transfer ID:" + c.getTransferID());
         System.out.println("Balance:" + c.getBalance());
+        // round balance so its only shows up to 2 decimals EX: 10.99 NOT: 10.3333333333
     }
     
     public static void transfer(Customer c, ArrayList<Customer> accounts, Scanner scnr) {
@@ -182,11 +184,7 @@ public class BankManager {
     
     public static void printTransactions (Customer c) {
         c.printLog();
-
-    }
-    
-    public static void logOut() {
-        // Just logout
+        
     }
     
 }

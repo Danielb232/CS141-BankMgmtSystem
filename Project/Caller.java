@@ -8,7 +8,8 @@ public class Caller {
         
         System.out.println("-- Welcome to the Bank Management System 1.0 --");
         
-        while (true) {
+        boolean systemRunning = true;
+        while (systemRunning) {
             // Menu for management system
             System.out.println("\nMenu: ");
             System.out.println("#1 - Login.");
@@ -33,20 +34,19 @@ public class Caller {
             
             if (choice == 3) {
                 System.out.println("\nBye!");
+                systemRunning = false;
                 break;
             }
-            boolean t;
-            while(t = true){
-                switch (choice) {
-                    case 1:
-                    BankManager.loginToAcc(accounts, scnr);
-                    break;
-                    case 2:
-                    BankManager.addAccount(accounts, scnr);
-                    break;
-                }
+            
+            switch (choice) {
+                case 1:
+                BankManager.loginToAcc(accounts, scnr);
+                break;
+                case 2:
+                BankManager.addAccount(accounts, scnr);
+                break;
             }
         }
     }
-    
 }
+
