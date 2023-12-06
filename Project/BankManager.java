@@ -21,7 +21,7 @@ public class BankManager {
             
             if ((i.getUserName().equals(userName)) && (i.getPassword().equals(passWord))) {
                 System.out.println("\nLogin Successful!");
-                System.out.println("Hello, " + i.getName());
+                System.out.println("\nHello, " + i.getName());
                 //  indexPosition = i;
                 //
                 
@@ -68,7 +68,7 @@ public class BankManager {
                         break;
                     }
                     case 4: {
-                        //transfer();
+                        transfer(i, accounts, scnr);
                         break;
                     }
                     case 5: {
@@ -87,87 +87,106 @@ public class BankManager {
             }
             
         }
+    } 
+    
+    public static void addAccount(ArrayList<Customer> accounts, Scanner scnr) {
+        
+        System.out.println("Please enter new username");
+        String newUser = scnr.nextLine();
+        System.out.println("Please enter new password");
+        String newPassword = scnr.nextLine();
+        System.out.println("Please enter your name");
+        String newName = scnr.nextLine();
+        scnr.nextLine();
+        System.out.println("Please enter your age");
+        int newAge = scnr.nextInt();
+        System.out.println("Please enter your initial deposit");
+        double newBalance = scnr.nextInt();
+        
+        // FIX THIS!!! WE NEED TO ADD THE TRANSACTION LOG STRING ARRAY
+        Customer newCustomer = new Customer(newUser, newPassword, newName, newBalance, newAge);
+        accounts.add(newCustomer);
+        
+        System.out.println("\nYour transfer ID is " + newCustomer.getTransferID() + ".");
+        
     }
     
-}
-
-public static void addAccount(ArrayList<Customer> accounts, Scanner scnr) {
     
-    System.out.println("Please enter new username");
-    String newUser = scnr.nextLine();
-    System.out.println("Please enter new password");
-    String newPassword = scnr.nextLine();
-    System.out.println("Please enter your name");
-    String newName = scnr.nextLine();
-    scnr.nextLine();
-    System.out.println("Please enter your age");
-    int newAge = scnr.nextInt();
-    System.out.println("Please enter your initial deposit");
-    double newBalance = scnr.nextInt();
-    
-    // FIX THIS!!! WE NEED TO ADD THE TRANSACTION LOG STRING ARRAY
-    Customer newCustomer = new Customer(newUser, newPassword, newName, newBalance, newAge, transactionLog[] );
-    accounts.add(newCustomer);
-    
-    System.out.println("\nYour transfer ID is " + newCustomer.getTransferID() + ".");
-    
-}
-
-
-public static void deposit(Customer c, Scanner scnr) {
-    System.out.println("How much money would you like to deposit into your account?");
-    double amount = scnr.nextDouble();        
-    
-    
-    if (amount < 1.00) {
-        System.out.println("You must deposit at least $1.00");
-    }
-    else {
-        c.deposit(amount);
-        // FIX THIS
+    public static void deposit(Customer c, Scanner scnr) {
+        System.out.println("How much money would you like to deposit into your account?");
+        double amount = scnr.nextDouble();        
+        
+        
+        if (amount < 1.00) {
+            System.out.println("You must deposit at least $1.00");
+        }
+        else {
+            c.deposit(amount);
+            String depositMessage = ("Deposited $" + amount);
+            System.out.println(depositMessage);
+            c.addToLog(depositMessage);
+        }
+        
     }
     
-}
-
-public static void withdraw(Customer c, Scanner scnr){
-    System.out.println("How much money would you like to withdraw from your account?");
-    double amount = scnr.nextDouble();
-    if (amount > c.getBalance()) {
-        System.out.println("Insufficient Funds");
+    public static void withdraw(Customer c, Scanner scnr) {
+        System.out.println("How much money would you like to withdraw from your account?");
+        double amount = scnr.nextDouble();
+        if (amount > c.getBalance()) {
+            System.out.println("Insufficient Funds");
+        }
+        
+        if (amount < 1.00) {
+            System.out.println("You must withdraw at least $1.00");
+        }
+        else {
+            c.withdraw(amount);
+            String withdrawMessage = ("Withdrew $" + amount);
+            System.out.println(withdrawMessage);
+            c.addToLog(withdrawMessage);
+        }  
     }
     
-    if (amount < 1.00) {
-        System.out.println("You must withdraw at least $1.00");
+    public static void viewBalance(Customer c) {
+        System.out.println("Transfer ID:" + c.getTransferID());
+        System.out.println("Balance:" + c.getBalance());
     }
-    else {
-        c.withdraw(amount);
-        // FIX THIS
-    }  
-}
-
-public static void viewBalance(Customer c) {
-    System.out.println("Transfer ID:" + c.getTransferID());
-    System.out.println("Balance:" + c.getBalance());
-}
-
-public static void transfer(ArrayList<Customer> accounts, Scanner scnr) {
-    System.out.println("Enter transfer ID of user to transfer to: ");
-    double transferAmount = scnr.nextDouble();
     
-    // If the transfer ID does not exist, say it doesnt
-    // if it does, say "are you sure?", then if they say "yes",
-    // Add the amount to the account that is connected to that transfer ID
+    public static void transfer(Customer c, ArrayList<Customer> accounts, Scanner scnr) {
+        System.out.println("Enter transfer ID of user to transfer to: ");
+        double inputTransferID = scnr.nextDouble();
+        System.out.println("Enter the amount you would like to transfer: ");
+        double transferAmount = scnr.nextDouble();
+        
+        for( Customer i : accounts ) {
+            if (i.getTransferID()== inputTransferID) {
+                System.out.println("are you sure you want to transfer $" + transferAmount + " to " +  i.getName() + "?" + "\n 1. yes \n 2. no");
+                int choice = scnr.nextInt();
+                if (choice == 1){
+                    i.deposit(transferAmount);
+                    c.withdraw(transferAmount);
+                    
+                    String transferredIntoMessage = ("Transferred $" + transferAmount + " to " + i.getName());
+                    c.addToLog(transferredIntoMessage);
+                    String transferredFromMessage = ("Transferred $" + transferAmount + " from " + c.getName());
+                    i.addToLog(transferredFromMessage);
+                    System.out.print(transferredIntoMessage);
+                    
+                }
+            }
+            else {
+                System.out.println("Transfer ID does not exist.");
+            }
+        }
+    }
     
-}
+    public static void printTransactions (Customer c) {
+        c.printLog();
 
-public static void printTransactions () {
-    // We need an array list that stores all the transaction messages from deposit & withdraw.
-    // We would print that array list here
-    //
-    // Add an array list to the customer
-}
-
-public static void logOut() {
-    // Just logout
-}
+    }
+    
+    public static void logOut() {
+        // Just logout
+    }
+    
 }

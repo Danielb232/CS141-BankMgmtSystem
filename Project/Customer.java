@@ -1,4 +1,5 @@
 	
+    import java.util.ArrayList;
     import java.util.Random;
     
     public class Customer {
@@ -11,10 +12,10 @@
         private String UserName;
         private double balance;
         private int transferID;
-        private String[] transactionLog;
+        private ArrayList<String> transactionLog = new ArrayList<String>();
         
         
-        public Customer(String newUser, String newPassword, String newName, double newBalance, int age, String[] transactionLog){
+        public Customer(String newUser, String newPassword, String newName, double newBalance, int age){
             this.name = newName;
             this.password = newPassword;
             this.UserName = newUser;
@@ -50,6 +51,15 @@
         
         public void logOut() {
             return;
+        }
+        
+        
+        public void addToLog (String transactionMessage) {
+            transactionLog.add(transactionMessage);
+        }
+        
+        public void printLog() {
+            for(transactionLog )
         }
         
         //  Getters and Setters for methods ends ^
