@@ -79,7 +79,7 @@ public class BankManager {
                                 break;
                             }
                             case 5: {
-                                i.printTransactions();
+                                printTransactions(i);
                                 break;
                             }
                             case 6: {

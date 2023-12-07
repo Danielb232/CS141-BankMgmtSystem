@@ -113,6 +113,7 @@
             this.balance = balance;
         }
         
+        // ERROR HERE
         public ArrayList<Customer> getTransactionLog() {
             return null;
         }
