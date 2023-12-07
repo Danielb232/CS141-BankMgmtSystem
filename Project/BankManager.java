@@ -18,78 +18,85 @@ public class BankManager {
         System.out.println("Please enter your password ");
         String passWord = scnr.nextLine();
         
-        for(Customer i : accounts) {
-            
-            if ((i.getUserName().equals(userName)) && (i.getPassword().equals(passWord))) {
-                System.out.println("\nLogin Successful!");
-                System.out.println("\nHello, " + i.getName());
+        if(accounts.size() == 0 ){
+            System.out.print("\nThere are no accounts in the system.\nPlease create an account.\n");
+        }
+        
+        else if(accounts.size() > 0) {
+            for(Customer i : accounts) {
                 
-                boolean loggedIn = true;
-                while (loggedIn) {
-                    System.out.println("\nMenu: ");
-                    System.out.println("#1 - Deposit.");
-                    System.out.println("#2 - Withdraw.");
-                    System.out.println("#3 - View Balance & account info");
-                    System.out.println("#4 - Transfer Money to another account.");
-                    System.out.println("#5 - Print Transaction History.");
-                    System.out.println("#6 - Log out and go back to main menu.\n");
+                if ((i.getUserName().equals(userName)) && (i.getPassword().equals(passWord))) {
+                    System.out.println("\nLogin Successful!");
+                    System.out.println("\nHello, " + i.getName());
                     
-                    System.out.println("\nEnter your choice (1-6): ");
-                    
-                    int choice1;
-                    
-                    
-                    do {
+                    boolean loggedIn = true;
+                    while (loggedIn) {
+                        System.out.println("\nMenu: ");
+                        System.out.println("#1 - Deposit.");
+                        System.out.println("#2 - Withdraw.");
+                        System.out.println("#3 - View Balance & account info");
+                        System.out.println("#4 - Transfer Money to another account.");
+                        System.out.println("#5 - Print Transaction History.");
+                        System.out.println("#6 - Log out and go back to main menu.\n");
                         
-                        while (!scnr.hasNextInt()) {
-                            System.out.println("Invalid input. Please enter a number between 1 and 6.");
-                            scnr.next();
+                        System.out.println("\nEnter your choice (1-6): ");
+                        
+                        int choice1;
+                        
+                        
+                        do {
+                            
+                            while (!scnr.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a number between 1 and 6.");
+                                scnr.next();
+                            }
+                            
+                            choice1 = scnr.nextInt();
+                            scnr.nextLine();
+                            
+                        } while (choice1 < 1 || choice1 > 6);
+                        
+                        if (choice1 == 6) {
+                            System.out.println("\nBye!");
+                            break;
                         }
                         
-                        choice1 = scnr.nextInt();
-                        scnr.nextLine();
-                        
-                    } while (choice1 < 1 || choice1 > 6);
-                    
-                    if (choice1 == 6) {
-                        System.out.println("\nBye!");
-                        break;
+                        switch(choice1) {
+                            case 1: {
+                                deposit(i, scnr);
+                                break;
+                            }
+                            case 2: {
+                                withdraw(i, scnr);
+                                break;
+                            }
+                            case 3: {
+                                viewBalance(i);
+                                break;
+                            }
+                            case 4: {
+                                transfer(i, accounts, scnr);
+                                break;
+                            }
+                            case 5: {
+                                i.printTransactions();
+                                break;
+                            }
+                            case 6: {
+                                loggedIn = false;
+                                break;
+                            }
+                            
+                        }
                     }
-                    
-                    switch(choice1) {
-                        case 1: {
-                            deposit(i, scnr);
-                            break;
-                        }
-                        case 2: {
-                            withdraw(i, scnr);
-                            break;
-                        }
-                        case 3: {
-                            viewBalance(i);
-                            break;
-                        }
-                        case 4: {
-                            transfer(i, accounts, scnr);
-                            break;
-                        }
-                        case 5: {
-                            i.printTransactions();
-                            break;
-                        }
-                        case 6: {
-                            loggedIn = false;
-                            break;
-                        }
-                        
-                    }
+                    break;
                 }
-                break;
+                
+                else {
+                    System.out.print("\nUsername/Password not found, try again");
+                }
+                
             }
-            else {
-                System.out.print("Username/password not found, try again");
-            }
-            
         }
     } 
     
@@ -152,7 +159,7 @@ public class BankManager {
     public static void viewBalance(Customer c) {
         System.out.println("\nTransfer ID:" +  c.getTransferID());
         System.out.printf("Balance: %.2f", c.getBalance());
-        // round balance so its only shows up to 2 decimals EX: 10.99 NOT: 10.3333333333
+        System.out.print("\n");
     }
     
     public static void transfer(Customer c, ArrayList<Customer> accounts, Scanner scnr) {
@@ -165,25 +172,31 @@ public class BankManager {
         
         for( Customer i : accounts ) {
             if (i.getTransferID()== inputTransferID) {
-                System.out.println("Are you sure you want to transfer $" + transferAmount + " to " +  i.getName() + "?" + "\n 1. yes \n 2. no");
+                System.out.println("Are you sure you want to transfer $" + transferAmount + " to " +  i.getName() + "?" + "\n  1. yes \n  2. no");
                 int choice = scnr.nextInt();
+                
+                transferCompleted = true;
+                
                 if (choice == 1){
                     i.deposit(transferAmount);
                     c.withdraw(transferAmount);
                     
-                    String transferredIntoMessage = ("Transferred $" + transferAmount + " to " + i.getName());
+                    String transferredIntoMessage = ("Transferred $" + transferAmount + " to " + i.getName() + "\n");
                     c.addToLog(transferredIntoMessage);
                     String transferredFromMessage = ("$" + transferAmount + " transferred  from " + c.getName());
                     i.addToLog(transferredFromMessage);
                     System.out.print(transferredIntoMessage);
                     
-                    transferCompleted = true;
+                    
+                    break;
+                }
+                if (choice == 2) {
+                    System.out.println("\nTransfer Declined.");
                     break;
                 }
             }
             
         }
-        
         if (!transferCompleted) {
             System.out.println("Transfer ID does not exist.");
         }
@@ -191,6 +204,7 @@ public class BankManager {
     
     
     public static void printTransactions (Customer c) {
+        // THIS IS NOT PRINTING ANYTHING!
         c.printLog();
     }
     

@@ -56,6 +56,7 @@
             for(int i = 0; i < transactionLog.size(); i++) {
                 System.out.println(transactionLog.get(i) + "\n");
             }
+            return;
         }
         
         //  Getters and Setters for methods ends ^

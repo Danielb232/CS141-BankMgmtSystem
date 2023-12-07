@@ -17,6 +17,7 @@ public class Caller {
             System.out.println("#3 - Exit");
             
             System.out.println("\nEnter your choice (1-3): ");
+            // If choice is 1 & there are no accounts in the system, we need an error message.
             
             int choice;
             
@@ -35,7 +36,6 @@ public class Caller {
             if (choice == 3) {
                 System.out.println("\nBye!");
                 systemRunning = false;
-                break;
             }
             
             switch (choice) {
