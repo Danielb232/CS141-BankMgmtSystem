@@ -56,7 +56,9 @@
             for(int i = 0; i < transactionLog.size(); i++) {
                 System.out.println(transactionLog.get(i) + "\n");
             }
-            return;
+            if(transactionLog.size() == 0) {
+                System.out.println("No transactions yet.");
+            }
         }
         
         //  Getters and Setters for methods ends ^
@@ -109,6 +111,10 @@
         }
         public void setBalance(double balance) {
             this.balance = balance;
+        }
+        
+        public ArrayList<Customer> getTransactionLog() {
+            return null;
         }
         
         
