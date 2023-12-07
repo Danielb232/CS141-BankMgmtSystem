@@ -21,7 +21,6 @@
             this.UserName = newUser;
             this.balance = newBalance;
             this.transferID = rand.nextInt(999999);
-            this.transactionLog = transactionLog;
         }
         
         
@@ -49,16 +48,13 @@
             return;
         }
         
-        
-        
-        
         public void addToLog (String transactionMessage) {
             transactionLog.add(transactionMessage);
         }
         
         public void printLog() {
             for(int i = 0; i < transactionLog.size(); i++) {
-                System.out.println(transactionLog.get(i));
+                System.out.println(transactionLog.get(i) + "\n");
             }
         }
         

@@ -84,6 +84,7 @@ public class BankManager {
                         
                     }
                 }
+                break;
             }
             else {
                 System.out.print("Username/password not found, try again");
@@ -149,8 +150,8 @@ public class BankManager {
     }
     
     public static void viewBalance(Customer c) {
-        System.out.println("Transfer ID:" + c.getTransferID());
-        System.out.println("Balance:" + c.getBalance());
+        System.out.println("\nTransfer ID:" +  c.getTransferID());
+        System.out.printf("Balance: %.2f", c.getBalance());
         // round balance so its only shows up to 2 decimals EX: 10.99 NOT: 10.3333333333
     }
     
@@ -160,9 +161,11 @@ public class BankManager {
         System.out.println("Enter the amount you would like to transfer: ");
         double transferAmount = scnr.nextDouble();
         
+        boolean transferCompleted = false;
+        
         for( Customer i : accounts ) {
             if (i.getTransferID()== inputTransferID) {
-                System.out.println("are you sure you want to transfer $" + transferAmount + " to " +  i.getName() + "?" + "\n 1. yes \n 2. no");
+                System.out.println("Are you sure you want to transfer $" + transferAmount + " to " +  i.getName() + "?" + "\n 1. yes \n 2. no");
                 int choice = scnr.nextInt();
                 if (choice == 1){
                     i.deposit(transferAmount);
@@ -170,21 +173,25 @@ public class BankManager {
                     
                     String transferredIntoMessage = ("Transferred $" + transferAmount + " to " + i.getName());
                     c.addToLog(transferredIntoMessage);
-                    String transferredFromMessage = ("Transferred $" + transferAmount + " from " + c.getName());
+                    String transferredFromMessage = ("$" + transferAmount + " transferred  from " + c.getName());
                     i.addToLog(transferredFromMessage);
                     System.out.print(transferredIntoMessage);
                     
+                    transferCompleted = true;
+                    break;
                 }
             }
-            else {
-                System.out.println("Transfer ID does not exist.");
-            }
+            
+        }
+        
+        if (!transferCompleted) {
+            System.out.println("Transfer ID does not exist.");
         }
     }
     
+    
     public static void printTransactions (Customer c) {
         c.printLog();
-        
     }
     
 }
