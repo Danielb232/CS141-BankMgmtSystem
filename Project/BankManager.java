@@ -59,7 +59,7 @@ public class BankManager {
                         } while (choice1 < 1 || choice1 > 6);
                         
                         // Perform actions based on the user's choice
-                        if (choice1 == 6) {
+                        if (choice1 == 7) {
                             System.out.println("\nBye!");
                             break;
                         }
@@ -87,6 +87,9 @@ public class BankManager {
                                 break;
                             }
                             case 6: {
+                                updateInfo(i, scnr);
+                            }
+                            case 7: {
                                 loggedIn = false;
                                 break;
                             }
@@ -250,5 +253,32 @@ public class BankManager {
     public static void printTransactions(Customer c) {
         System.out.print("\n");
         c.printLog();
+    }
+
+    public static void updateInfo(Customer c, Scanner scnr) {
+        System.out.println("What would you like to update?\n1. Username\n2. Password\n3. Name\n4. Age");
+        int choice = scnr.nextInt();
+        switch (choice) {
+            case 1:
+                System.out.println("Enter new username:\n");
+                break;
+        
+            case 2:
+                System.out.println("Enter new password:\n");
+                
+                break;
+
+            case 3:
+                System.out.println("Enter new name:\n");
+                break;
+
+            case 4:
+                System.out.println("Enter new age:\n");
+                break;
+            default:
+                // Print number not valid
+                break;
+        }
+
     }
 }
