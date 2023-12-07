@@ -1,51 +1,51 @@
-
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
-
 
 public class BankManager {
     
     private static Scanner scnr = new Scanner(System.in);
     static Random rand = new Random();
     
-    
+    // Method to handle the login process for a customer
     public static void loginToAcc(ArrayList<Customer> accounts, Scanner scnr) {
         
+        // Prompt the user for username and password
         System.out.println("Please enter your username: ");
         String userName = scnr.nextLine();
         
-        System.out.println("Please enter your password ");
+        System.out.println("Please enter your password: ");
         String passWord = scnr.nextLine();
         
-        if(accounts.size() == 0 ){
+        // Check if there are accounts in the system
+        if (accounts.size() == 0) {
             System.out.print("\nThere are no accounts in the system.\nPlease create an account.\n");
-        }
-        
-        else if(accounts.size() > 0) {
-            for(Customer i : accounts) {
-                
+        } else {
+            // Iterate through accounts to find a matching username and password
+            for (Customer i : accounts) {
                 if ((i.getUserName().equals(userName)) && (i.getPassword().equals(passWord))) {
+                    // If a match is found, log in and display the customer menu
                     System.out.println("\nLogin Successful!");
                     System.out.println("\nHello, " + i.getName());
                     
+                    // Loop to handle actions after successful login
                     boolean loggedIn = true;
                     while (loggedIn) {
+                        // Display menu for logged-in customers
                         System.out.println("\nMenu: ");
                         System.out.println("#1 - Deposit.");
                         System.out.println("#2 - Withdraw.");
                         System.out.println("#3 - View Balance & account info");
                         System.out.println("#4 - Transfer Money to another account.");
                         System.out.println("#5 - Print Transaction History.");
-                        System.out.println("#6 - Log out and go back to main menu.\n");
+                        System.out.println("#6 - Log out and go back to the main menu.\n");
                         
+                        // Prompt the user for a choice
                         System.out.println("\nEnter your choice (1-6): ");
-                        
                         int choice1;
                         
-                        
+                        // Input validation loop for the choice
                         do {
-                            
                             while (!scnr.hasNextInt()) {
                                 System.out.println("Invalid input. Please enter a number between 1 and 6.");
                                 scnr.next();
@@ -56,12 +56,14 @@ public class BankManager {
                             
                         } while (choice1 < 1 || choice1 > 6);
                         
+                        // Perform actions based on the user's choice
                         if (choice1 == 6) {
                             System.out.println("\nBye!");
                             break;
                         }
                         
-                        switch(choice1) {
+                        // Switch statement to handle different choices
+                        switch (choice1) {
                             case 1: {
                                 deposit(i, scnr);
                                 break;
@@ -86,82 +88,112 @@ public class BankManager {
                                 loggedIn = false;
                                 break;
                             }
-                            
                         }
                     }
                     break;
-                }
-                
-                else {
+                } else {
+                    // If no match is found, prompt the user to try again
                     System.out.print("\nUsername/Password not found, try again");
                 }
-                
             }
         }
-    } 
+    }
     
+    // Method to add a new customer account
     public static void addAccount(ArrayList<Customer> accounts, Scanner scnr) {
-        
+        // Prompt the user for information to create a new account
         System.out.println("Please enter new username");
         String newUser = scnr.nextLine();
+        scnr.next();
         System.out.println("Please enter new password");
         String newPassword = scnr.nextLine();
+        scnr.next();
         System.out.println("Please enter your name");
         String newName = scnr.nextLine();
+        scnr.next();
         System.out.println("Please enter your age");
-        int newAge = scnr.nextInt();
-        System.out.println("Please enter your initial deposit");
-        double newBalance = scnr.nextDouble();
+        int newAge = 0;
+        if(!scnr.hasNextInt()) {
+            System.out.print("Please enter a number for your age\n");
+            scnr.next();
+        }
         
+        newAge = scnr.nextInt();
+        
+        if (newAge <= 16) {
+            System.out.print("\nYou are too young to create an account.\n");
+            return;
+        }
+        
+        System.out.println("Please enter your initial deposit");
+        double newBalance = 0;
+        
+        while ((!scnr.hasNextDouble())) {
+            System.out.print("Please enter a number for your initial deposit\n");
+            scnr.next();
+        }
+        
+        newBalance = scnr.nextDouble();
+        
+        if (newBalance < 100) {
+            System.out.print("\nYou do not have enough money to open an account at this time.\nYou must have an initial deposit of $100.\n");
+            return;
+        }
+        
+        // Create a new Customer object and add it to the accounts
         Customer newCustomer = new Customer(newUser, newPassword, newName, newBalance, newAge);
         accounts.add(newCustomer);
         
+        // Display the transfer ID for the new customer
         System.out.println("\nYour transfer ID is " + newCustomer.getTransferID() + ". Save this!");
-        
     }
     
-    
+    // Method to handle the deposit process
     public static void deposit(Customer c, Scanner scnr) {
         System.out.println("How much money would you like to deposit into your account?");
-        double amount = scnr.nextDouble();        
+        double amount = scnr.nextDouble();
         
-        
+        // Check if the amount is valid
         if (amount < 1.00) {
             System.out.println("You must deposit at least $1.00");
-        }
-        else {
+        } else {
+            // Perform the deposit and update the transaction log
             c.deposit(amount);
             String depositMessage = ("Deposited $" + amount);
             System.out.println(depositMessage);
             c.addToLog(depositMessage);
         }
-        
     }
     
+    // Method to handle the withdrawal process
     public static void withdraw(Customer c, Scanner scnr) {
         System.out.println("How much money would you like to withdraw from your account?");
         double amount = scnr.nextDouble();
+        
+        // Check if the amount is valid and if there are sufficient funds
         if (amount > c.getBalance()) {
             System.out.println("Insufficient Funds");
         }
         
         if (amount < 1.00) {
             System.out.println("You must withdraw at least $1.00");
-        }
-        else {
+        } else {
+            // Perform the withdrawal and update the transaction log
             c.withdraw(amount);
             String withdrawMessage = ("Withdrew $" + amount);
             System.out.println(withdrawMessage);
             c.addToLog(withdrawMessage);
-        }  
+        }
     }
     
+    // Method to view the balance and account information
     public static void viewBalance(Customer c) {
-        System.out.println("\nTransfer ID:" +  c.getTransferID());
+        System.out.println("\nTransfer ID:" + c.getTransferID());
         System.out.printf("Balance: %.2f", c.getBalance());
         System.out.print("\n");
     }
     
+    // Method to handle the money transfer process
     public static void transfer(Customer c, ArrayList<Customer> accounts, Scanner scnr) {
         System.out.println("Enter transfer ID of user to transfer to: ");
         double inputTransferID = scnr.nextDouble();
@@ -170,14 +202,16 @@ public class BankManager {
         
         boolean transferCompleted = false;
         
-        for( Customer i : accounts ) {
-            if (i.getTransferID()== inputTransferID) {
-                System.out.println("Are you sure you want to transfer $" + transferAmount + " to " +  i.getName() + "?" + "\n  1. yes \n  2. no");
+        // Iterate through accounts to find the recipient with the given transfer ID
+        for (Customer i : accounts) {
+            if (i.getTransferID() == inputTransferID) {
+                // Confirm the transfer with the user and update balances and logs
+                System.out.println("Are you sure you want to transfer $" + transferAmount + " to " + i.getName() + "?" + "\n  1. yes \n  2. no");
                 int choice = scnr.nextInt();
                 
                 transferCompleted = true;
                 
-                if (choice == 1){
+                if (choice == 1) {
                     i.deposit(transferAmount);
                     c.withdraw(transferAmount);
                     
@@ -187,7 +221,6 @@ public class BankManager {
                     i.addToLog(transferredFromMessage);
                     System.out.print(transferredIntoMessage);
                     
-                    
                     break;
                 }
                 if (choice == 2) {
@@ -195,17 +228,16 @@ public class BankManager {
                     break;
                 }
             }
-            
         }
+        // Display a message if the transfer ID does not exist
         if (!transferCompleted) {
             System.out.println("Transfer ID does not exist.");
         }
     }
     
-    
-    public static void printTransactions (Customer c) {
+    // Method to print transaction history for a customer
+    public static void printTransactions(Customer c) {
         System.out.print("\n");
         c.printLog();
     }
-    
 }
