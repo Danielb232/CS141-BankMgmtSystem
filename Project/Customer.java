@@ -26,13 +26,15 @@
         
         // Getters and Setters for methods start \/
         
-        public void deposit(double amount) {
+        public void deposit(double amount, String depositMessage) {
             balance += amount;
+            addToLog(depositMessage);
             return;
         }
         
-        public void withdraw(double amount) {
+        public void withdraw(double amount, String withdrawMessage) {
             balance -= amount;
+            addToLog(withdrawMessage);
             return;
         }
         

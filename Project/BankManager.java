@@ -12,7 +12,9 @@ public class BankManager {
         
         // Prompt the user for username and password
         System.out.println("Please enter your username: ");
+        scnr.next();
         String userName = scnr.nextLine();
+        
         
         System.out.println("Please enter your password: ");
         String passWord = scnr.nextLine();
@@ -102,16 +104,17 @@ public class BankManager {
     // Method to add a new customer account
     public static void addAccount(ArrayList<Customer> accounts, Scanner scnr) {
         // Prompt the user for information to create a new account
-        System.out.println("Please enter new username");
+        System.out.println("Please enter new username:");
+        scnr.next();
         String newUser = scnr.nextLine();
-        scnr.next();
-        System.out.println("Please enter new password");
+
+        System.out.println("Please enter new password:");
         String newPassword = scnr.nextLine();
-        scnr.next();
-        System.out.println("Please enter your name");
+
+        System.out.println("Please enter your name:");
         String newName = scnr.nextLine();
-        scnr.next();
-        System.out.println("Please enter your age");
+
+        System.out.println("Please enter your age:");
         int newAge = 0;
         if(!scnr.hasNextInt()) {
             System.out.print("Please enter a number for your age\n");
@@ -150,6 +153,7 @@ public class BankManager {
     
     // Method to handle the deposit process
     public static void deposit(Customer c, Scanner scnr) {
+
         System.out.println("How much money would you like to deposit into your account?");
         double amount = scnr.nextDouble();
         
@@ -158,10 +162,11 @@ public class BankManager {
             System.out.println("You must deposit at least $1.00");
         } else {
             // Perform the deposit and update the transaction log
-            c.deposit(amount);
             String depositMessage = ("Deposited $" + amount);
+            
+            c.deposit(amount, depositMessage);
             System.out.println(depositMessage);
-            c.addToLog(depositMessage);
+            //c.addToLog(depositMessage);
         }
     }
     
@@ -172,17 +177,19 @@ public class BankManager {
         
         // Check if the amount is valid and if there are sufficient funds
         if (amount > c.getBalance()) {
-            System.out.println("Insufficient Funds");
+            System.out.println("Insufficient Funds. You cannot withdraw more than $" + c.getBalance());
+            return;
         }
         
         if (amount < 1.00) {
             System.out.println("You must withdraw at least $1.00");
         } else {
             // Perform the withdrawal and update the transaction log
-            c.withdraw(amount);
             String withdrawMessage = ("Withdrew $" + amount);
+        
+            c.withdraw(amount, withdrawMessage);
             System.out.println(withdrawMessage);
-            c.addToLog(withdrawMessage);
+            //c.addToLog(withdrawMessage);
         }
     }
     
@@ -211,14 +218,13 @@ public class BankManager {
                 
                 transferCompleted = true;
                 
-                if (choice == 1) {
-                    i.deposit(transferAmount);
-                    c.withdraw(transferAmount);
-                    
+                if (choice == 1) {                    
                     String transferredIntoMessage = ("Transferred $" + transferAmount + " to " + i.getName() + "\n");
-                    c.addToLog(transferredIntoMessage);
                     String transferredFromMessage = ("$" + transferAmount + " transferred  from " + c.getName());
-                    i.addToLog(transferredFromMessage);
+                    
+                    i.deposit(transferAmount, transferredIntoMessage);
+                    c.withdraw(transferAmount, transferredFromMessage);
+                    
                     System.out.print(transferredIntoMessage);
                     
                     break;
