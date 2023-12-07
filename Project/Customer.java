@@ -54,7 +54,7 @@
         
         public void printLog() {
             for(int i = 0; i < transactionLog.size(); i++) {
-                System.out.println(transactionLog.get(i) + "\n");
+                System.out.println(transactionLog.get(i));
             }
             if(transactionLog.size() == 0) {
                 System.out.println("No transactions yet.");
@@ -112,14 +112,6 @@
         public void setBalance(double balance) {
             this.balance = balance;
         }
-        
-        // ERROR HERE
-        public ArrayList<Customer> getTransactionLog() {
-            return null;
-        }
-        
-        
-        
         
     }
     

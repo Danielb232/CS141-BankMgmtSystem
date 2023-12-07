@@ -204,9 +204,8 @@ public class BankManager {
     
     
     public static void printTransactions (Customer c) {
-        System.out.println("Transaction log size: " + c.getTransactionLog().size());
+        System.out.print("\n");
         c.printLog();
-        
     }
     
 }
