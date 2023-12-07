@@ -107,17 +107,19 @@ public class BankManager {
         System.out.println("Please enter new username:");
         scnr.next();
         String newUser = scnr.nextLine();
-
+        
         System.out.println("Please enter new password:");
         String newPassword = scnr.nextLine();
-
+        
         System.out.println("Please enter your name:");
         String newName = scnr.nextLine();
-
+        
         System.out.println("Please enter your age:");
         int newAge = 0;
-        if(!scnr.hasNextInt()) {
-            System.out.print("Please enter a number for your age\n");
+        
+        // Input Validation
+        while(!scnr.hasNextInt()) {
+            System.out.print("Please enter a number for your age:\n");
             scnr.next();
         }
         
@@ -128,7 +130,7 @@ public class BankManager {
             return;
         }
         
-        System.out.println("Please enter your initial deposit");
+        System.out.println("Please enter your initial deposit:");
         double newBalance = 0;
         
         while ((!scnr.hasNextDouble())) {
@@ -149,11 +151,12 @@ public class BankManager {
         
         // Display the transfer ID for the new customer
         System.out.println("\nYour transfer ID is " + newCustomer.getTransferID() + ". Save this!");
+        
     }
     
     // Method to handle the deposit process
     public static void deposit(Customer c, Scanner scnr) {
-
+        
         System.out.println("How much money would you like to deposit into your account?");
         double amount = scnr.nextDouble();
         
@@ -164,9 +167,10 @@ public class BankManager {
             // Perform the deposit and update the transaction log
             String depositMessage = ("Deposited $" + amount);
             
+            // Deposit amount and add deposit message to the account's transaction arraylist
             c.deposit(amount, depositMessage);
             System.out.println(depositMessage);
-            //c.addToLog(depositMessage);
+            
         }
     }
     
@@ -186,10 +190,10 @@ public class BankManager {
         } else {
             // Perform the withdrawal and update the transaction log
             String withdrawMessage = ("Withdrew $" + amount);
-        
+            
+            // Withdraw amount and add withdraw message to the account's transaction arraylist
             c.withdraw(amount, withdrawMessage);
             System.out.println(withdrawMessage);
-            //c.addToLog(withdrawMessage);
         }
     }
     
@@ -222,6 +226,7 @@ public class BankManager {
                     String transferredIntoMessage = ("Transferred $" + transferAmount + " to " + i.getName() + "\n");
                     String transferredFromMessage = ("$" + transferAmount + " transferred  from " + c.getName());
                     
+                    // Deposit amount and withdraw amount and add transfer message into their respective transaction logs
                     i.deposit(transferAmount, transferredIntoMessage);
                     c.withdraw(transferAmount, transferredFromMessage);
                     

@@ -14,7 +14,7 @@
         private int transferID;
         private ArrayList<String> transactionLog = new ArrayList<String>();
         
-        
+        // Constructor for Customer object 
         public Customer(String newUser, String newPassword, String newName, double newBalance, int age){
             this.name = newName;
             this.password = newPassword;
@@ -24,7 +24,7 @@
         }
         
         
-        // Getters and Setters for methods start \/
+        // Getters and Setters for methods 
         
         public void deposit(double amount, String depositMessage) {
             balance += amount;
@@ -58,13 +58,13 @@
             for(int i = 0; i < transactionLog.size(); i++) {
                 System.out.println(transactionLog.get(i));
             }
+            
+            System.out.println("Current balance: " + getBalance() + "\n");
+            
             if(transactionLog.size() == 0) {
                 System.out.println("No transactions yet.");
             }
-        }
-        
-        //  Getters and Setters for methods ends ^
-        
+        }  
         
         public static Random getRand() {
             return rand;
