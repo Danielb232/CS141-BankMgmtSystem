@@ -120,8 +120,8 @@ public class BankManager {
         
         newAge = scnr.nextInt();
         
-        if (newAge <= 16) {
-            System.out.print("\nYou are too young to create an account.\n");
+        if (newAge < 16) {
+            System.out.print("\nYou are too young to create an account.\nYou must be 16 or older to create an account.\n1");
             return;
         }
         
