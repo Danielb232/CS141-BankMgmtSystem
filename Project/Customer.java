@@ -5,7 +5,8 @@
     public class Customer {
         
         static Random rand = new Random();
-        
+
+        // Declare variables
         private int age;
         private String name;
         private String password;
@@ -59,10 +60,10 @@
                 System.out.println(transactionLog.get(i));
             }
             
-            System.out.println("Current balance: " + getBalance() + "\n");
+            System.out.printf("Current Balance: %.2f", getBalance(), "\n");
             
             if(transactionLog.size() == 0) {
-                System.out.println("No transactions yet.");
+                System.out.println("\nNo transactions yet.");
             }
         }  
         

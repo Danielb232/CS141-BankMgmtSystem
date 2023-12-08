@@ -59,7 +59,7 @@ public class BankManager {
                         } while (choice1 < 1 || choice1 > 6);
                         
                         // Perform actions based on the user's choice
-                        if (choice1 == 7) {
+                        if (choice1 == 6) {
                             System.out.println("\nBye!");
                             break;
                         }
@@ -87,12 +87,9 @@ public class BankManager {
                                 break;
                             }
                             case 6: {
-                                updateInfo(i, scnr);
-                            }
-                            case 7: {
                                 loggedIn = false;
                                 break;
-                            }
+                            }      
                         }
                     }
                     break;
@@ -221,17 +218,38 @@ public class BankManager {
             if (i.getTransferID() == inputTransferID) {
                 // Confirm the transfer with the user and update balances and logs
                 System.out.println("Are you sure you want to transfer $" + transferAmount + " to " + i.getName() + "?" + "\n  1. yes \n  2. no");
-                int choice = scnr.nextInt();
+                
+                int choice = 0;
+
+                do {
+                    // Check if the input is an integer
+                    if (!scnr.hasNextInt()) {
+                        System.out.println("Invalid input. Please enter a number between 1 and 3.");
+                        
+                        // Consume invalid input to avoid an infinite loop
+                        scnr.next();
+                        continue;
+                    }
+                    
+                    // Read the user's input as an integer
+                    choice = scnr.nextInt();
+                    
+                    // Check if the entered choice is outside the valid range
+                    if (choice < 1 || choice > 3) {
+                        System.out.println("Invalid input. Please enter a number between 1 and 3.");
+                    }
+                    
+                } while (choice < 1 || choice > 3);
                 
                 transferCompleted = true;
                 
                 if (choice == 1) {                    
                     String transferredIntoMessage = ("Transferred $" + transferAmount + " to " + i.getName() + "\n");
-                    String transferredFromMessage = ("$" + transferAmount + " transferred  from " + c.getName());
+                    String transferredFromMessage = ("$" + transferAmount + " transferred from " + c.getName());
                     
                     // Deposit amount and withdraw amount and add transfer message into their respective transaction logs
-                    i.deposit(transferAmount, transferredIntoMessage);
-                    c.withdraw(transferAmount, transferredFromMessage);
+                    i.deposit(transferAmount, transferredFromMessage);
+                    c.withdraw(transferAmount, transferredIntoMessage);
                     
                     System.out.print(transferredIntoMessage);
                     
@@ -254,31 +272,6 @@ public class BankManager {
         System.out.print("\n");
         c.printLog();
     }
-
-    public static void updateInfo(Customer c, Scanner scnr) {
-        System.out.println("What would you like to update?\n1. Username\n2. Password\n3. Name\n4. Age");
-        int choice = scnr.nextInt();
-        switch (choice) {
-            case 1:
-                System.out.println("Enter new username:\n");
-                break;
-        
-            case 2:
-                System.out.println("Enter new password:\n");
-                
-                break;
-
-            case 3:
-                System.out.println("Enter new name:\n");
-                break;
-
-            case 4:
-                System.out.println("Enter new age:\n");
-                break;
-            default:
-                // Print number not valid
-                break;
-        }
-
-    }
+    
 }
+
